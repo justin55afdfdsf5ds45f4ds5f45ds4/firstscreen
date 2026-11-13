@@ -7,7 +7,7 @@
     "package": "sh package.sh"
   },
   "keywords": [],
-  "author": "",
+  "author": "Justin Lord",
   "license": "Apache-2.0",
   "dependencies": {
     "esbuild": "^0.28.2",

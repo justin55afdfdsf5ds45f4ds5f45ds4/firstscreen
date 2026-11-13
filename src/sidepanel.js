@@ -62,6 +62,13 @@ async function showSite() {
   $("check").disabled = !ok;
 }
 
+// Gemini Nano download progress goes in the model chip, so it never hides the status of the running check.
+function showDownload(p) {
+  if (p >= 1) return showModelState();
+  $("model").textContent = `Gemini Nano downloading ${Math.round(p * 100)}%`;
+  $("model").className = "chip wait";
+}
+
 async function showModelState() {
   const s = await localModelState();
   const label = MODEL_LABELS[s] || s;
@@ -150,7 +157,7 @@ async function runCheck() {
   $("result").hidden = true;
 
   // Pick the model, and start the local model download on the click itself (the SDK needs a user gesture).
-  const picked = await prepareModel(models, (p) => setStatus(`Downloading Gemini Nano ${Math.round(p * 100)}%`));
+  const picked = await prepareModel(models, showDownload);
 
   try {
     await fetchAndActivate(rc).catch(() => {});

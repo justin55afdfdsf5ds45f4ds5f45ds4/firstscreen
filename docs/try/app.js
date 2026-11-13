@@ -5184,6 +5184,11 @@ function setStatus(text, kind = "") {
   $("status").textContent = text;
   $("status").className = "status " + kind;
 }
+function showDownload(p) {
+  if (p >= 1) return showModelState();
+  $("model").textContent = `Gemini Nano downloading ${Math.round(p * 100)}%`;
+  $("model").className = "chip wait";
+}
 async function showModelState() {
   const s = await localModelState();
   $("model").textContent = MODEL_LABELS[s] || s;
@@ -5208,7 +5213,7 @@ async function jpegBase64(url) {
 async function check() {
   $("check").disabled = true;
   $("result").hidden = true;
-  const picked = await prepareModel(models, (p) => setStatus(`Downloading Gemini Nano ${Math.round(p * 100)}%`, "busy"));
+  const picked = await prepareModel(models, showDownload);
   try {
     setStatus(readingText(picked), "busy");
     const img = await jpegBase64(imageUrl(current));
