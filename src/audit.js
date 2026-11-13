@@ -95,7 +95,10 @@ export const MODEL_LABELS = {
 export async function prepareModel(models, onProgress) {
   const imageLocal = await availability([EN_TEXT, { type: "image" }]);
   const textLocal = await availability([EN_TEXT]);
-  const useTextOnly = imageLocal !== "available" && textLocal === "available";
+  // A model that is ready beats one that still has to download; with images beats text only.
+  const canGet = (s) => s === "downloadable" || s === "downloading";
+  const useTextOnly =
+    imageLocal !== "available" && (textLocal === "available" || (!canGet(imageLocal) && canGet(textLocal)));
   const chosen = useTextOnly ? models.textModel : models.model;
   const state = useTextOnly ? textLocal : imageLocal;
   if (state === "downloadable" || state === "downloading") {

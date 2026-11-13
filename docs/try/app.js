@@ -5093,7 +5093,8 @@ var MODEL_LABELS = {
 async function prepareModel(models2, onProgress) {
   const imageLocal = await availability([EN_TEXT, { type: "image" }]);
   const textLocal = await availability([EN_TEXT]);
-  const useTextOnly = imageLocal !== "available" && textLocal === "available";
+  const canGet = (s) => s === "downloadable" || s === "downloading";
+  const useTextOnly = imageLocal !== "available" && (textLocal === "available" || !canGet(imageLocal) && canGet(textLocal));
   const chosen = useTextOnly ? models2.textModel : models2.model;
   const state = useTextOnly ? textLocal : imageLocal;
   if (state === "downloadable" || state === "downloading") {
