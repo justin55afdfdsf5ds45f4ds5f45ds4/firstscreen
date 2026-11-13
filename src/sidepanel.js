@@ -6,7 +6,7 @@ import { getRemoteConfig, fetchAndActivate, getValue } from "firebase/remote-con
 import { firebaseConfig } from "./firebase-config.js";
 import { APP_CHECK_DEBUG_TOKEN } from "./debug-token.js";
 import { probeFirstScreen, probeWholePage } from "./probe.js";
-import { createAuditModels, localModelState, prepareModel, runAudit, MODEL_LABELS } from "./audit.js";
+import { createAuditModels, localModelState, prepareModel, runAudit, MODEL_LABELS, readingText } from "./audit.js";
 
 // ---------- Firebase ----------
 self.FIREBASE_APPCHECK_DEBUG_TOKEN = APP_CHECK_DEBUG_TOKEN;
@@ -164,7 +164,7 @@ async function runCheck() {
     const small = await shrinkJpeg(jpegBase64);
     $("shot").src = `data:image/jpeg;base64,${small}`;
 
-    setStatus("Reading the first screen", "busy");
+    setStatus(readingText(picked), "busy");
     const { audit, where, ms } = await runAudit(picked, facts, small, getValue(rc, "extra_guidance").asString());
     render(audit, facts, where, ms);
     setStatus(`Checked ${where} in ${(ms / 1000).toFixed(1)} s`, "done");

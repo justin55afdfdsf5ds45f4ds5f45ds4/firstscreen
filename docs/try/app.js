@@ -5100,21 +5100,50 @@ async function prepareModel(models2, onProgress) {
     chosen.initializeDeviceModel((p) => onProgress && onProgress(p)).catch(() => {
     });
   }
-  return { chosen, useTextOnly };
+  return { chosen, useTextOnly, local: state === "available" };
+}
+function readingText(picked) {
+  return picked.local ? "Reading the first screen on this device, about 10 s (longer the first time)" : "Reading the first screen in the cloud";
+}
+function findings(f) {
+  const problems = [];
+  const strengths = [];
+  const canCall = f.tapToCallOnFirstScreen > 0 || (f.callButtonsOnFirstScreen || []).length > 0;
+  if (canCall) strengths.push("There is a call button or tap-to-call link on the first screen.");
+  else problems.push("No call button or tap-to-call link on the first screen.");
+  if ((f.phoneNumbersOnFirstScreen || []).length) strengths.push(`The phone number ${f.phoneNumbersOnFirstScreen[0]} is on the first screen.`);
+  else problems.push("No phone number a customer can read on the first screen.");
+  for (const o of f.overlays || []) problems.push(`A ${o.kind} covers ${o.coversPercent}% of the first screen.`);
+  if (f.shrunkToFit || !f.hasViewportMeta) {
+    problems.push(`The page is a desktop layout shrunk onto the phone, so text shows at about ${f.smallestTextPx ?? "a few"} px.`);
+  } else if (f.smallestTextPx && f.smallestTextPx < 12) {
+    problems.push(`Some text is only ${f.smallestTextPx} px on the phone.`);
+  }
+  if (f.pageWiderThanPhone) problems.push("The page is wider than the phone, so it scrolls sideways.");
+  if (f.pinnedHeaderPercent >= 25) problems.push(`A pinned header takes ${f.pinnedHeaderPercent}% of the screen.`);
+  if (!f.reviewMentions && !f.reviewWidget) problems.push("No reviews or testimonials anywhere on the page.");
+  else strengths.push("The page shows reviews or testimonials.");
+  const year = Number(f.copyrightYear);
+  if (year && year < (/* @__PURE__ */ new Date()).getFullYear() - 2) problems.push(`The footer still says copyright ${year}.`);
+  return { problems, strengths };
 }
 function buildPrompt(facts2, guidance) {
+  const { problems, strengths } = findings(facts2);
   return [
     "You check small business websites the way a customer sees them on a phone.",
-    "The image is the first phone screen of the site. The facts below were measured on that same screen.",
-    "Judge only what is really there. If a phone number, tap-to-call link or call button is on the first screen, do not say it is missing.",
-    "overlays lists only things that really sit on top of the page and block it. pinnedHeaderPercent is how much of the screen a header that stays pinned takes up.",
-    "shrunkToFit means the page is drawn at desktop width and shrunk onto the phone; smallestTextPx and medianTextPx are the text sizes as they appear on the phone.",
-    "reviewMentions and reviewWidget cover the whole page after scrolling, not just the first screen.",
-    "Return JSON with: score (0 to 100, how well this first screen helps a customer call or book),",
-    "verdict (one plain sentence), fixes (exactly 3, most important first, each with a short title and why it matters to a customer),",
-    "owner_line (one friendly, specific, true sentence a freelancer can send the owner about what they will see on their own phone, no sales pitch).",
+    "The image is the first phone screen of the site. The problems and strengths below were measured on that same screen; treat them as true.",
+    "Use the image to confirm them and to judge what measurements can't see, like clutter or a weak headline.",
+    "Return JSON with:",
+    "score: 0 to 100, how well this first screen helps a customer call or book. No way to call on the first screen, or something covering most of it: under 40. A desktop page shrunk onto the phone: under 45. A call button, the number and reviews all easy to find: 85 or more.",
+    "verdict: one plain sentence about the first screen.",
+    "fixes: exactly 3 changes the owner should make, most important first, each with a short title and why it matters to a customer. Take them from the problems first. If there are fewer than 3 problems, add smaller improvements you can see in the image. Never list something that already works as a fix.",
+    "owner_line: one friendly, specific, true sentence a freelancer can send the owner about what they will see on their own phone. No greeting, no sales pitch.",
     guidance || "",
-    "Facts:",
+    "Problems measured:",
+    ...problems.length ? problems.map((p) => "- " + p) : ["- none"],
+    "Strengths measured:",
+    ...strengths.length ? strengths.map((s) => "- " + s) : ["- none"],
+    "All measured facts:",
     JSON.stringify(facts2)
   ].join("\n");
 }
@@ -5181,7 +5210,7 @@ async function check() {
   $("result").hidden = true;
   const picked = await prepareModel(models, (p) => setStatus(`Downloading Gemini Nano ${Math.round(p * 100)}%`, "busy"));
   try {
-    setStatus("Reading the first screen", "busy");
+    setStatus(readingText(picked), "busy");
     const img = await jpegBase64(imageUrl(current));
     const { audit, where, ms } = await runAudit(picked, facts[current], img, "");
     render(audit, where, ms);

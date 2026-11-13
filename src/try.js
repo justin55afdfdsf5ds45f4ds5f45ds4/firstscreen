@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
 import { firebaseConfig, RECAPTCHA_ENTERPRISE_SITE_KEY } from "./firebase-config.js";
 import { APP_CHECK_DEBUG_TOKEN } from "./debug-token.js";
-import { createAuditModels, localModelState, prepareModel, runAudit, MODEL_LABELS } from "./audit.js";
+import { createAuditModels, localModelState, prepareModel, runAudit, MODEL_LABELS, readingText } from "./audit.js";
 
 // The hosted page proves itself to App Check with reCAPTCHA Enterprise. A local build can use a debug token instead.
 if (APP_CHECK_DEBUG_TOKEN) self.FIREBASE_APPCHECK_DEBUG_TOKEN = APP_CHECK_DEBUG_TOKEN;
@@ -64,7 +64,7 @@ async function check() {
   $("result").hidden = true;
   const picked = await prepareModel(models, (p) => setStatus(`Downloading Gemini Nano ${Math.round(p * 100)}%`, "busy"));
   try {
-    setStatus("Reading the first screen", "busy");
+    setStatus(readingText(picked), "busy");
     const img = await jpegBase64(imageUrl(current));
     const { audit, where, ms } = await runAudit(picked, facts[current], img, "");
     render(audit, where, ms);
