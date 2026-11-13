@@ -2,7 +2,7 @@
 
 **See what a customer sees on the first phone screen of any small business website, and what to fix first.**
 
-Most people meet a local business on a phone, from a Google search, standing in the kitchen with a leaking pipe or out in the yard next to a fallen tree. The first screen decides whether they call. While auditing nearly 1,000 local trades websites (tree services, roofers, plumbers, HVAC, lawn care) in seven US cities this month, the same problems kept showing up on that first screen: no phone number, no tap-to-call button, a sign-up popup covering everything, a page that doesn't fit the phone, and hundreds of five-star Google reviews that never appear on the homepage.
+Most people meet a local business on a phone, from a Google search, standing in the kitchen with a leaking pipe or out in the yard next to a fallen tree. The first screen decides whether they call. While auditing over 1,000 local trades websites (tree services, roofers, plumbers, HVAC, lawn care) in eight US cities this month, the same problems kept showing up on that first screen: no phone number, no tap-to-call button, a sign-up popup covering everything, a page that doesn't fit the phone, and hundreds of five-star Google reviews that never appear on the homepage.
 
 I ran the checks at phone size on 266 of those sites, from Wichita, Omaha, Des Moines and Springfield, Missouri, and threw out 21 that blocked the bot or errored out, were a Facebook page, a dead page or a directory listing, or weren't really a trade. Of the other 245, after rechecking every flag against a screenshot or a second run that scrolls the whole page:
 
