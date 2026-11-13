@@ -62,7 +62,7 @@ On-device checks need desktop Chrome with Gemini Nano available (the panel shows
 
 ## Privacy
 
-On a device with Gemini Nano, nothing about the checked page leaves the computer except the saved result (page address, score, verdict, fixes and the owner line) in your own Firestore history. In cloud mode, the first-screen screenshot and the measured facts are sent to Gemini through Firebase AI Logic. FirstScreen never reads form fields, cookies or anything outside the tab you check.
+On a device with Gemini Nano, nothing about the checked page leaves the computer except the saved result (page address, score, verdict, fixes, owner line, where it ran, how long it took and the tap-to-call count) in your own Firestore history. In cloud mode, the first-screen screenshot and the measured facts are sent to Gemini through Firebase AI Logic. FirstScreen never reads form fields, cookies or anything outside the tab you check.
 
 ## License
 
