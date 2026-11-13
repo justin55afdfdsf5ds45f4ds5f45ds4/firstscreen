@@ -55,7 +55,7 @@ On-device checks need desktop Chrome with Gemini Nano available (the panel shows
 
 ## Build it yourself
 
-1. Create a Firebase project and turn on **AI Logic** (Gemini Developer API), **Authentication** (Anonymous), **Cloud Firestore** and **Remote Config**. Register a web app and put its config in `src/firebase-config.js`.
+1. Create a Firebase project and turn on **AI Logic** (Gemini Developer API), **Authentication** (Anonymous), **Cloud Firestore** and **Remote Config**. Register a web app and put its config in `src/firebase-config.js`. The config in this repo is the public web config of the demo project: a Firebase web API key identifies the project and is not a secret, and access is controlled by App Check and the Firestore rules.
 2. App Check: in Firebase console > App Check, register the web app with a reCAPTCHA Enterprise key (the hosted demo uses it; put the site key in `RECAPTCHA_ENTERPRISE_SITE_KEY`) and turn on enforcement for Firebase AI Logic. Extension pages can't load reCAPTCHA, so the extension uses a debug token: generate one in App Check > Apps > Manage debug tokens, copy `src/debug-token.example.js` to `src/debug-token.js` and paste it there. That file is git-ignored and never published.
 3. Deploy `firebase/firestore.rules` and upload `firebase/remoteconfig.template.json` as the Remote Config template.
 4. `npm install`, then `node build.mjs`. It bundles `src/` into `ext/sidepanel.js` (the extension) and `docs/try/app.js` (the web demo, always built without the debug token).
