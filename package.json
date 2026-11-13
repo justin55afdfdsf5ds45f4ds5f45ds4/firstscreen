@@ -1,0 +1,17 @@
+{
+  "name": "firstscreen",
+  "version": "1.0.0",
+  "description": "See the first phone screen of a local business website the way a customer does, and know what to fix. Hybrid on-device and cloud Gemini through Firebase AI Logic.",
+  "scripts": {
+    "build": "node build.mjs",
+    "package": "sh package.sh"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "esbuild": "^0.28.2",
+    "firebase": "^13.3.0"
+  },
+  "private": true
+}

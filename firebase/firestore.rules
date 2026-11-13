@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Each signed-in user (anonymous is fine) can read and add only their own saved checks.
+    match /users/{uid}/audits/{audit} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow create: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['url', 'host', 'score', 'verdict', 'fixes', 'owner_line', 'where', 'ms', 'tapToCallOnFirstScreen', 'createdAt']);
+    }
+  }
+}

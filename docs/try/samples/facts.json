@@ -1,0 +1,91 @@
+{
+ "maple": {
+  "url": "https://example.com/sample.html",
+  "title": "Maple & Pine Tree Service | Tree Removal and Trimming",
+  "hasViewportMeta": true,
+  "pageWiderThanPhone": false,
+  "tapToCallLinks": 0,
+  "tapToCallOnFirstScreen": 0,
+  "callButtonsOnFirstScreen": [],
+  "phoneNumbersOnFirstScreen": [],
+  "buttonsOnFirstScreen": [
+   "Sign me up"
+  ],
+  "viewportWidth": 390,
+  "shrunkToFit": false,
+  "smallestTextPx": 13,
+  "medianTextPx": 18,
+  "pinnedHeaderPercent": 0,
+  "overlays": [
+   {
+    "kind": "sign-up or offer popup",
+    "coversPercent": 88,
+    "text": "Join our seasonal tree care newsletter! Get tips, discounts and storm alerts delivered to your inbox"
+   }
+  ],
+  "reviewMentions": 0,
+  "reviewWidget": false,
+  "copyrightYear": "2017",
+  "firstScreenText": "Maple & Pine \u2630 Welcome to Maple & Pine Tree Service Serving our community with pride since 1998 About Us We are a family owned tree service offering tree removal, tree trimming, stump grinding and storm cleanup for homes and businesses. Our crew is licensed and insured and we always clean up after ourselves. Services Join our seasonal tree care newsletter! Get tips, discounts and storm alerts delivered to your inbox every month. Sign me up No thanks"
+ },
+ "ridgeline": {
+  "url": "https://example.com/sample-roofing.html",
+  "title": "Ridgeline Roofing Co. - Residential and Commercial Roofing",
+  "hasViewportMeta": false,
+  "pageWiderThanPhone": false,
+  "tapToCallLinks": 0,
+  "tapToCallOnFirstScreen": 0,
+  "callButtonsOnFirstScreen": [],
+  "phoneNumbersOnFirstScreen": [
+   "(308) 555-0187"
+  ],
+  "buttonsOnFirstScreen": [
+   "Home",
+   "Roofing",
+   "Gutters",
+   "Gallery",
+   "About",
+   "Contact",
+   "Accept"
+  ],
+  "viewportWidth": 1180,
+  "shrunkToFit": true,
+  "smallestTextPx": 4,
+  "medianTextPx": 4.6,
+  "pinnedHeaderPercent": 0,
+  "overlays": [],
+  "reviewMentions": 0,
+  "reviewWidget": false,
+  "copyrightYear": "2015",
+  "firstScreenText": "Family owned since 1987 Mon to Fri 7am to 5pm RIDGELINE ROOFING CO. Home Roofing Gutters Gallery About Contact Quality Roofing You Can Count On Ridgeline Roofing Co. installs and repairs asphalt shingle, metal and flat roofs for homes and businesses. We work with all insurance companies on storm and hail claims and every roof comes with our workmanship warranty. Request a free inspection using our contact form. Roof Replacement Complete tear off and new roof systems from leading manufacturers. Storm Damage Hail and wind inspections and help with your insurance claim. Gutters Seamless gutters a"
+ },
+ "clearwater": {
+  "url": "https://example.com/sample-plumbing.html",
+  "title": "Clearwater Plumbing | Plumbers You Can Call Today",
+  "hasViewportMeta": true,
+  "pageWiderThanPhone": false,
+  "tapToCallLinks": 2,
+  "tapToCallOnFirstScreen": 2,
+  "callButtonsOnFirstScreen": [
+   "Call now",
+   "Call (308) 555-0163"
+  ],
+  "phoneNumbersOnFirstScreen": [
+   "(308) 555-0163"
+  ],
+  "buttonsOnFirstScreen": [
+   "Call now",
+   "Call (308) 555-0163"
+  ],
+  "viewportWidth": 390,
+  "shrunkToFit": false,
+  "smallestTextPx": 13.3,
+  "medianTextPx": 16,
+  "pinnedHeaderPercent": 0,
+  "overlays": [],
+  "reviewMentions": 3,
+  "reviewWidget": false,
+  "copyrightYear": "2026",
+  "firstScreenText": "Clearwater Plumbing Call now Leaks, clogs and water heaters fixed today Licensed plumbers serving the whole metro area. Same day appointments, upfront prices. Call (308) 555-0163 \u2605\u2605\u2605\u2605\u2605 4.9 from 212 Google reviews They showed up within two hours, found the leak behind the dishwasher and had it fixed before dinner. Fair price and they cleaned up. Dana R., Google review What we fix Leaks and burst pipes. Drain cleaning. Water heaters. Toilets and faucets. Sewer camera inspections. Clearwater Plumbing \u00b7 (308) 555-0163 \u00b7 \u00a9 2026 \u00b7 Sample site made for the FirstScreen demo, not a real business."
+ }
+}

@@ -1,0 +1,29 @@
+{
+  "parameters": {
+    "phone_width": {
+      "defaultValue": { "value": "390" },
+      "description": "Width of the phone view in CSS pixels",
+      "valueType": "NUMBER"
+    },
+    "phone_height": {
+      "defaultValue": { "value": "844" },
+      "description": "Height of the phone view in CSS pixels",
+      "valueType": "NUMBER"
+    },
+    "settle_ms": {
+      "defaultValue": { "value": "2500" },
+      "description": "How long to wait after the page loads so late popups and cookie bars show up before the check",
+      "valueType": "NUMBER"
+    },
+    "prompt_version": {
+      "defaultValue": { "value": "v1" },
+      "description": "Version label of the audit prompt",
+      "valueType": "STRING"
+    },
+    "extra_guidance": {
+      "defaultValue": { "value": "" },
+      "description": "Extra instruction appended to the Gemini prompt, so the audit can be tuned without shipping a new build",
+      "valueType": "STRING"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+node_modules/
+*.zip
+.DS_Store
+# Local only: the App Check debug token, and the extension build that embeds it.
+src/debug-token.js
+ext/sidepanel.js

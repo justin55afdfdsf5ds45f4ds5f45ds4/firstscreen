@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FirstScreen demo: check a first phone screen with Gemini</title>
+<meta name="description" content="FirstScreen reads the first phone screen of a local business website with Gemini and says what to fix. On-device with Gemini Nano in Chrome, in the cloud everywhere else.">
+<style>
+:root{--ink:#14181f;--muted:#5d6675;--line:#e6e8ec;--bg:#f6f7f9;--card:#fff;--brand:#0f766e;--good:#15803d;--ok:#b45309;--bad:#b91c1c}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+.wrap{max-width:1040px;margin:0 auto;padding:28px 20px 40px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.01em}
+.logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(180deg,var(--brand) 0 38%,#99f6e4 38% 100%);box-shadow:inset 0 0 0 2px #0b5e58}
+.chip{font-size:12.5px;padding:4px 10px;border-radius:999px;background:#eef0f3;color:var(--muted);white-space:nowrap}
+.chip.on{background:#dcfce7;color:#166534}.chip.wait{background:#fef3c7;color:#92400e}.chip.off{background:#e0e7ff;color:#3730a3}
+h1{font-size:30px;line-height:1.2;letter-spacing:-.02em;margin:26px 0 8px;max-width:760px}
+.lead{color:var(--muted);margin:0 0 22px;max-width:720px}
+.grid{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.label{margin:0 0 10px;color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.06em}
+.samples{display:grid;gap:8px}
+.sample{display:grid;grid-template-columns:44px 1fr;grid-template-rows:auto auto;column-gap:10px;text-align:left;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px;cursor:pointer;font:inherit;color:inherit}
+.sample img{grid-row:span 2;width:44px;height:64px;object-fit:cover;object-position:top;border-radius:6px;border:1px solid var(--line)}
+.sample b{font-size:14px;align-self:end}.sample span{font-size:12.5px;color:var(--muted)}
+.sample.sel{border-color:var(--brand);box-shadow:0 0 0 2px #99f6e4}
+.phone{margin:16px auto 0;width:220px;border:7px solid #111;border-radius:22px;overflow:hidden;background:#111;aspect-ratio:390/844}
+.phone img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+button.go{display:block;width:100%;margin-top:16px;font:inherit;font-weight:700;border:0;border-radius:10px;padding:12px 14px;background:var(--brand);color:#fff;cursor:pointer}
+button.go:disabled{opacity:.45;cursor:default}
+.status{margin:10px 0 0;color:var(--muted);font-size:13px;min-height:1.2em;overflow-wrap:anywhere}
+.status.busy::before{content:"";display:inline-block;width:10px;height:10px;margin-right:6px;border:2px solid var(--brand);border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite;vertical-align:-1px}
+.status.error{color:var(--bad)}.status.done{color:var(--good)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.result .top{display:flex;gap:16px;align-items:center}
+.score{flex:none;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:26px;border:5px solid currentColor}
+.good{color:var(--good)}.ok{color:var(--ok)}.bad{color:var(--bad)}
+.verdict{margin:0 0 4px;font-weight:700;font-size:17px}
+.where{margin:0;font-size:13px;color:var(--muted)}
+h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:20px 0 8px}
+.fixes{margin:0;padding-left:20px}.fixes li{margin-bottom:10px}.fixes b{display:block}.fixes span{color:var(--muted)}
+.owner{background:#f0fdfa;border:1px solid #ccfbf1;border-radius:10px;padding:12px;margin:0}
+.empty{color:var(--muted);margin:0}
+.foot{margin-top:24px;color:var(--muted);font-size:13px}
+.foot a{color:var(--brand)}
+@media(max-width:760px){.grid{grid-template-columns:1fr}h1{font-size:25px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand"><span class="logo" aria-hidden="true"></span>FirstScreen</div>
+  <span id="model" class="chip">Checking for Gemini Nano</span>
+</header>
+<h1>See the first phone screen the way a customer does, and know what to fix.</h1>
+<p class="lead">Pick a sample local business site. Gemini reads its first phone screen together with facts measured on the page and returns a score, the three fixes that matter most and one true sentence for the owner. In Chrome with Gemini Nano it runs on your device. Everywhere else it runs in the cloud, through Firebase AI Logic.</p>
+
+<div class="grid">
+  <section class="card">
+    <p class="label">Sample sites</p>
+    <div id="samples" class="samples"></div>
+    <figure class="phone"><img id="shot" alt="First phone screen of the sample site"></figure>
+    <button id="check" class="go">Check this first screen</button>
+    <p id="status" class="status"></p>
+  </section>
+
+  <section class="card">
+    <div id="result" class="result" hidden>
+      <div class="top">
+        <div id="score" class="score">0</div>
+        <div><p id="verdict" class="verdict"></p><p id="where" class="where"></p></div>
+      </div>
+      <h2>Fix these first</h2>
+      <ol id="fixes" class="fixes"></ol>
+      <h2>What to tell the owner</h2>
+      <p id="owner" class="owner"></p>
+    </div>
+    <p class="empty" id="hint">The result shows up here. The extension does the same check on any live site, at phone size, in one click.</p>
+  </section>
+</div>
+
+<p class="foot">The three sites are made up for this demo. FirstScreen is a Chrome extension; this page runs the same audit code on saved first screens so you can try it without installing anything. <a href="https://github.com/justin55afdfdsf5ds45f4ds5f45ds4/firstscreen">Code and extension on GitHub</a>.</p>
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

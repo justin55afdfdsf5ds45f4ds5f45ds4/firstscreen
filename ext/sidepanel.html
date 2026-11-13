@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FirstScreen</title>
+<link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+<header>
+  <div class="brand"><span class="logo" aria-hidden="true"></span>FirstScreen</div>
+  <span id="model" class="chip">Checking local model</span>
+</header>
+
+<section class="card start">
+  <p class="label">Site</p>
+  <p id="site" class="site">Open a business website to check it</p>
+  <button id="check" disabled>Check the first phone screen</button>
+  <p id="status" class="status"></p>
+</section>
+
+<section id="result" class="card result" hidden>
+  <div class="top">
+    <figure class="phone"><img id="shot" alt="First phone screen of the site"></figure>
+    <div class="summary">
+      <div id="score" class="score">0</div>
+      <p id="verdict" class="verdict"></p>
+      <p id="where" class="where"></p>
+    </div>
+  </div>
+  <h2>Fix these first</h2>
+  <ol id="fixes" class="fixes"></ol>
+  <h2>What to tell the owner</h2>
+  <div class="owner"><p id="owner"></p><button id="copy" class="ghost">Copy</button></div>
+  <h2>Measured on the page</h2>
+  <div id="facts" class="facts"></div>
+</section>
+
+<section class="card">
+  <h2>Recent checks</h2>
+  <ul id="history" class="history"><li class="empty">Your checks show up here</li></ul>
+</section>
+
+<footer>Runs on Gemini Nano in Chrome when your device has it, and in the cloud when it doesn't. Built with Firebase AI Logic.</footer>
+<script type="module" src="sidepanel.js"></script>
+</body>
+</html>
